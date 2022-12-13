@@ -22,3 +22,9 @@ class RatingSerializer(ModelSerializer):
     class Meta:
         model = Rating
         exclude = ('author',)
+
+    def validate(self, attrs):
+        attrs =  super().validate(attrs)
+        request = self.context.get('request')
+        attrs['author'] = request.user
+        return attrs
